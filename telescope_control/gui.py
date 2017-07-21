@@ -5,7 +5,7 @@ import moveto
 import connect
 import os
 import sys
-sys.path.append('C:/Users/labuser/Desktop/python_temp')
+#sys.path.append('C:/Users/labuser/Desktop/python_temp')
 sys.path.append('../')
 sys.path.append('C:/Python27/Lib/site-packages/')
 #sys.path.append('C:/Python27x86/lib/site-packages')
@@ -26,7 +26,7 @@ import realtime_gp as rt
 import matplotlib.pyplot as plt
 from plot_path import *
 import planets
-'''
+
 g = connect.g
 c = g.GCommand
 ##
@@ -35,7 +35,7 @@ c2 = g2.GCommand
 #offset between galil and beam
 offsetAz = gp.galilAzOffset 
 offsetEl = gp.galilElOffset
-'''
+
 degtoctsAZ = config.degtoctsAZ
 degtoctsEl = config.degtoctsEl
 
@@ -618,6 +618,7 @@ class interface:
         date = strftime("%Y-%m-%d")
         time=strftime("%H-%M-%S")
         fpath='D:/software_git_repos/greenpol/telescope_control/configurations'
+        #fpath='D:/software_git_repos/greenpol/telescope_control/configurations'
         os.chdir(fpath)
         folder='memory'
         if not os.path.exists(folder):#this is the first file being created for that time
@@ -666,6 +667,8 @@ class interface:
                 key2='az'
             if key1 == 'dec':
                 key2='ra'
+            self.mtl1.config(text=key2)
+            selft.mtl2.config(text=key1)
             self.az2.delete(0,'end')
             self.az2.insert(END,data['Move to Location'][key2])
             self.el2.delete(0,'end')
