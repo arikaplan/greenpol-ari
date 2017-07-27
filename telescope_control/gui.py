@@ -1,16 +1,16 @@
 import config
 config.update_config()
-import scan
-import moveto
-import connect
+#import scan
+#import moveto
+#import connect
 import os
 import sys
-#sys.path.append('C:/Users/labuser/Desktop/python_temp')
-sys.path.append('../')
+sys.path.append('C:/Users/labuser/Desktop/python_temp')
+#sys.path.append('D:/software_git_repos/greenpol')
 sys.path.append('C:/Python27/Lib/site-packages/')
 #sys.path.append('C:/Python27x86/lib/site-packages')
 sys.path.append('data_aquisition')
-import get_pointing as gp
+#import get_pointing as gp
 import gclib
 import threading
 import time
@@ -22,11 +22,11 @@ import numpy as np
 #from tkinter import *   #this is for python 3
 from Tkinter import *    #this is for python 2.7
 import ttk #this is for python 2.7
-import realtime_gp as rt
+#import realtime_gp as rt
 import matplotlib.pyplot as plt
 from plot_path import *
 import planets
-
+'''
 g = connect.g
 c = g.GCommand
 ##
@@ -35,7 +35,7 @@ c2 = g2.GCommand
 #offset between galil and beam
 offsetAz = gp.galilAzOffset 
 offsetEl = gp.galilElOffset
-
+'''
 degtoctsAZ = config.degtoctsAZ
 degtoctsEl = config.degtoctsEl
 
@@ -282,7 +282,7 @@ class interface:
         self.convert=Button(self.buttonframe2,
                             text='radec/azel',command=self.update_moveto)
         self.convert.pack(side=RIGHT)
-##############################
+########### configuration page ###################
         configPage=Frame(nb)
         configFrame=Frame(configPage)
         configFrame.pack()
@@ -290,89 +290,117 @@ class interface:
         self.loclabel=Label(configFrame, text='Location')
         self.loclabel.grid(row=0, column=0, sticky=W)
         self.location=Entry(configFrame)
-        self.location.insert(END,'UCSB')
         self.location.grid(row=0, column=1)
 
         self.degtoctsAZ_l=Label(configFrame, text='degtoctsAZ')
         self.degtoctsAZ_l.grid(row=1, column=0, sticky=W)
         self.degtoctsAZ=Entry(configFrame)
-        self.degtoctsAZ.insert(END,'1024000./360.')
         self.degtoctsAZ.grid(row=1, column=1)
 
         self.degtoctsEL_l=Label(configFrame, text='degtoctsEL')
         self.degtoctsEL_l.grid(row=2, column=0, sticky=W)
         self.degtoctsEL=Entry(configFrame)
-        self.degtoctsEL.insert(END,'4096./360.')
         self.degtoctsEL.grid(row=2, column=1)
 
         self.azSP_l=Label(configFrame, text='azSP')
         self.azSP_l.grid(row=3, column=0, sticky=W)
         self.azSP=Entry(configFrame)
-        self.azSP.insert(END,'5')
         self.azSP.grid(row=3, column=1)
 
         self.azAC_l=Label(configFrame, text='azAC')
         self.azAC_l.grid(row=4, column=0, sticky=W)
         self.azAC=Entry(configFrame)
-        self.azAC.insert(END,'180')
         self.azAC.grid(row=4, column=1)
 
         self.azDC_l=Label(configFrame, text='azDC')
         self.azDC_l.grid(row=5, column=0, sticky=W)
         self.azDC=Entry(configFrame)
-        self.azDC.insert(END,'180')
         self.azDC.grid(row=5, column=1)
 
         self.elevSP_l=Label(configFrame, text='elevSP')
         self.elevSP_l.grid(row=6, column=0, sticky=W)
         self.elevSP=Entry(configFrame)
-        self.elevSP.insert(END,'5')
         self.elevSP.grid(row=6, column=1)
 
         self.elevAC_l=Label(configFrame, text='elevAC')
         self.elevAC_l.grid(row=7, column=0, sticky=W)
         self.elevAC=Entry(configFrame)
-        self.elevAC.insert(END,'360')
         self.elevAC.grid(row=7, column=1)
 
         self.elevDC_l=Label(configFrame, text='elevDC')
         self.elevDC_l.grid(row=8, column=0, sticky=W)
         self.elevDC=Entry(configFrame)
-        self.elevDC.insert(END,'360')
         self.elevDC.grid(row=8, column=1)
 
         self.azSPm_l=Label(configFrame, text='azSPm')
         self.azSPm_l.grid(row=9, column=0, sticky=W)
         self.azSPm=Entry(configFrame)
-        self.azSPm.insert(END,'5')
         self.azSPm.grid(row=9,column=1)
 
         self.azgain_l=Label(configFrame, text='azgain')
         self.azgain_l.grid(row=10, column=0, sticky=W)
         self.azgain=Entry(configFrame)
-        self.azgain.insert(END, '-360./(2.**16)')
         self.azgain.grid(row=10,column=1)
 
         self.elgain_l=Label(configFrame, text='elgain')
         self.elgain_l.grid(row=11, column=0, sticky=W)
         self.elgain=Entry(configFrame)
-        self.elgain.insert(END, '-360./(40000.)')
         self.elgain.grid(row=11,column=1)
 
         self.azoffset_l=Label(configFrame, text='azoffset')
         self.azoffset_l.grid(row=12, column=0, sticky=W)
         self.azoffset=Entry(configFrame)
-        self.azoffset.insert(END, '4.41496+140.')
         self.azoffset.grid(row=12,column=1)
 
         self.eloffset_l=Label(configFrame, text='eloffset')
         self.eloffset_l.grid(row=13, column=0, sticky=W)
         self.eloffset=Entry(configFrame)
-        self.eloffset.insert(END, '295.026')
         self.eloffset.grid(row=13,column=1)
 
         self.apply=Button(configFrame,text='Apply', command=self.global_config)
         self.apply.grid(row=14,column=1,sticky=W)
+	
+        #fpath='D:/software_git_repos/greenpol/telescope_control/configurations/config'
+        fpath='C:/Users/labuser/Desktop/greenpol-ari/telescope_control/configurations/config'
+        os.chdir(fpath)
+
+        try:
+
+            with open('config.txt', 'r') as handle:
+                data=pickle.loads(handle.read())
+
+            ##configuration
+            self.location.delete(0,'end')
+            self.location.insert(END,data['location'])
+            self.degtoctsAZ.delete(0,'end')
+            self.degtoctsAZ.insert(END,data['degtoctsAZ'])
+            self.degtoctsEL.delete(0,'end')
+            self.degtoctsEL.insert(END,data['degtoctsEL'])
+            self.azSP.delete(0,'end')
+            self.azSP.insert(END,data['azSP'])
+            self.azAC.delete(0,'end')
+            self.azAC.insert(END,data['azAC'])
+            self.azDC.delete(0,'end')
+            self.azDC.insert(END,data['azDC'])
+            self.elevSP.delete(0,'end')
+            self.elevSP.insert(END,data['elevSP'])
+            self.elevAC.delete(0,'end')
+            self.elevAC.insert(END,data['elevAC'])
+            self.elevDC.delete(0,'end')
+            self.elevDC.insert(END,data['elevDC'])
+            self.azSPm.delete(0,'end')
+            self.azSPm.insert(END,data['azSPm'])
+            self.azgain.delete(0,'end')
+            self.azgain.insert(END,data['azgain'])
+            self.elgain.delete(0,'end')
+            self.elgain.insert(END,data['elgain'])
+            self.azoffset.delete(0,'end')
+            self.azoffset.insert(END,data['azoffset'])
+            self.eloffset.delete(0,'end')
+            self.eloffset.insert(END,data['eloffset'])
+        
+        except:
+            pass
 
         ####### notebook layout #########
         nb.add(movePage, text='Move')
@@ -529,7 +557,19 @@ class interface:
         self.backup_r.insert(END,'Your Label')
         self.recordbutton = Button (self.outputframe4, text='Record', command=self.write_txt)
         self.recordbutton.grid(row=0,column=0,sticky=W)
-
+	
+	try:
+		path='D:/software_git_repos/greenpol/telescope_control/configurations/memory/'
+		os.chdir(path)
+		all_subdirs = [d for d in os.listdir('.') if os.path.isdir(d)]
+		latest_subdir = max(all_subdirs, key=os.path.getmtime)
+		os.chdir(path+latest_subdir)
+		list_of_files = glob.glob('*.txt')
+		latest_file = max(list_of_files, key=os.path.getctime)
+		fname=os.path.splitext(latest_file)[0]
+		self.read(fname=fname,date=latest_subdir)
+	except:
+		pass
 
     def global_config(self):
         global_location=self.location.get()
@@ -597,23 +637,9 @@ class interface:
                                       'Min El':self.MinEl.get(),
                                       'Max El':self.MaxEl.get(),
                                       'Step Size':self.stepSize.get()},
-              'Configuration':{'Location':self.location.get(),
-                               'degtoctsAZ':self.degtoctsAZ.get(),
-                               'degtoctsEL':self.degtoctsEL.get(),
-                               'azSP':self.azSP.get(),
-                               'azAC':self.azAC.get(),
-                               'azDC':self.azDC.get(),
-                               'elevSP':self.elevSP.get(),
-                               'elevAC':self.elevAC.get(),
-                               'elevDC':self.elevDC.get(),
-                               'azSPm':self.azSPm.get(),
-                               'azgain':self.azgain.get(),
-                               'elgain':self.elgain.get(),
-                               'azoffset':self.azoffset.get(),
-                               'eloffset':self.eloffset.get()},
-              'Plot':{'Date':self.date.get(),
-                      'From':self.beg.get(),
-                      'To':self.end.get()}}
+		      'Plot':{'Date':self.date.get(),
+			      'From':self.beg.get(),
+			      'To':self.end.get()}}
 
         date = strftime("%Y-%m-%d")
         time=strftime("%H-%M-%S")
@@ -643,10 +669,12 @@ class interface:
 
     def read_txt(self):
         fname=self.backup_l.get()
-        fpath='D:/software_git_repos/greenpol/telescope_control/configurations'
         date=self.date_l.get()
-        folder='memory'
-        os.chdir(fpath+'/'+folder+'/'+date)
+        self.read(fname,date)
+        
+    def read(self,fname,date):
+        fpath='D:/software_git_repos/greenpol/telescope_control/configurations/memory/'
+        os.chdir(fpath+date)
 
         try:
 
@@ -668,7 +696,7 @@ class interface:
             if key1 == 'dec':
                 key2='ra'
             self.mtl1.config(text=key2)
-            selft.mtl2.config(text=key1)
+            self.mtl2.config(text=key1)
             self.az2.delete(0,'end')
             self.az2.insert(END,data['Move to Location'][key2])
             self.el2.delete(0,'end')
@@ -738,35 +766,7 @@ class interface:
             self.stepSize.delete(0,'end')
             self.stepSize.insert(END,data['Horizontal Scan']['Step Size'])
 
-            ##configuration
-            self.location.delete(0,'end')
-            self.location.insert(END,data['Configuration']['Location'])
-            self.degtoctsAZ.delete(0,'end')
-            self.degtoctsAZ.insert(END,data['Configuration']['degtoctsAZ'])
-            self.degtoctsEL.delete(0,'end')
-            self.degtoctsEL.insert(END,data['Configuration']['degtoctsEL'])
-            self.azSP.delete(0,'end')
-            self.azSP.insert(END,data['Configuration']['azSP'])
-            self.azAC.delete(0,'end')
-            self.azAC.insert(END,data['Configuration']['azAC'])
-            self.azDC.delete(0,'end')
-            self.azDC.insert(END,data['Configuration']['azDC'])
-            self.elevSP.delete(0,'end')
-            self.elevSP.insert(END,data['Configuration']['elevSP'])
-            self.elevAC.delete(0,'end')
-            self.elevAC.insert(END,data['Configuration']['elevAC'])
-            self.elevDC.delete(0,'end')
-            self.elevDC.insert(END,data['Configuration']['elevDC'])
-            self.azSPm.delete(0,'end')
-            self.azSPm.insert(END,data['Configuration']['azSPm'])
-            self.azgain.delete(0,'end')
-            self.azgain.insert(END,data['Configuration']['azgain'])
-            self.elgain.delete(0,'end')
-            self.elgain.insert(END,data['Configuration']['elgain'])
-            self.azoffset.delete(0,'end')
-            self.azoffset.insert(END,data['Configuration']['azoffset'])
-            self.eloffset.delete(0,'end')
-            self.eloffset.insert(END,data['Configuration']['eloffset'])
+
 
             ##plot
             self.date.delete(0,'end')
@@ -890,8 +890,8 @@ class interface:
         if len(sys.argv)==1: #this is the defualt no argument write time
             sys.argv.append(60) #this sets how long it takes to write a file
         #data = np.zeros(1000, dtype=[("first", np.int), ("second", np.int)])
-##        eye = gp.getData.Eyeball()
-##        Data = gp.datacollector()
+        eye = gp.getData.Eyeball()
+        Data = gp.datacollector()
 
         #gp.fileStruct(Data.getData()) 
 
@@ -899,15 +899,12 @@ class interface:
         while True:
             #timer loop
 
-##            az, el, gpstime = gp.getAzEl(eye)
-##
-##            Data.add(az,el,gpstime)
+            az, el, gpstime = gp.getAzEl(eye)
+
+            Data.add(az,el,gpstime)
             #print Data.getData()
             time_b = time.time()
             delta = time_b-time_a
-            location=config.global_location
-            ra,dec=planets.azalt_to_radec(location,az,el)
-            
 
             if (delta>=2):
                 #print(rev,az,el)
@@ -915,10 +912,6 @@ class interface:
                 self.aztxt.insert('1.0', az)
                 self.alttxt.delete('1.0', END)
                 self.alttxt.insert('1.0', el)
-                self.ratxt.delete('1.0', END)
-                self.ratxt.insert('1.0', ra)
-                self.dectxt.delete('1.0', END)
-                self.dectxt.insert('1.0', dec)
 
             if(delta>=int(write_time)): 
 ##                gp.fileStruct(Data.getData(), Data)
@@ -1099,7 +1092,8 @@ class interface:
     
     def stop(self):
         print('stopping motion...')
-        c('ST')
+        c('STX')
+	c('STY')
     
     def motor(self):
         status = str(self.motorTxt.get('1.0',END))

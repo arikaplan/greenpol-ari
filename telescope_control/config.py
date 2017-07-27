@@ -2,8 +2,8 @@
 import pickle
 import os
 
-fpath='D:/software_git_repos/greenpol/telescope_control/configurations/config'
-#fpath='C:/Users/labuser/Desktop/greenpol-ari/telescope_control/configurations/config'
+#fpath='D:/software_git_repos/greenpol/telescope_control/configurations/config'
+fpath='C:/Users/labuser/Desktop/greenpol-ari/telescope_control/configurations/config'
 os.chdir(fpath)
 
 def update_config():
